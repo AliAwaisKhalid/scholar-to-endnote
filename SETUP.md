@@ -1,61 +1,59 @@
-# Setup: Scholar → EndNote Export (Windows)
-
-Chrome MV3 extension. Pick Google Scholar results → enrich (Crossref/OpenAlex) →
-export RIS/ENW/BibTeX/RefWorks to a file, Zotero, or EndNote. Optional native
-host adds EndNote auto-import and PDF→Markdown.
+# AliAwaisKhalid/scholar-to-endnote
+Select Google Scholar results (search, profile, cited-by, library), enrich via Crossref/OpenAlex, show journal-quality badges, export to EndNote/Zotero (RIS/ENW/BibTeX/RefWorks), and convert PDFs to Markdown.
+Manual: this file · GitHub: https://github.com/AliAwaisKhalid/scholar-to-endnote
+Reference: README.md
+Needs: Chrome (Chromium). Python on PATH only for the optional native host.
 
 ## Before you start
-- **Chrome** (or any Chromium browser with `chrome://extensions`).
-- **Python on PATH** — only if you want the native host (EndNote auto-import, ↓MD).
-  Check: `python --version`. Yours lives at `C:\Python313\python.exe`.
-- No build step. No npm. Nothing to compile.
+- Is scholar-to-endnote free? Yes. Source-available (no LICENSE file yet — add one before sharing).
+- Is scholar-to-endnote still maintained? Private, single-author project. Latest: v0.3.0.
+- How widely used is scholar-to-endnote? Not public, no track record. It's your own repo — unpacked/dev use only, no Chrome Web Store listing (no icons yet).
 
-## Core install (required) — load unpacked
-1. Open `chrome://extensions`.
-2. Toggle **Developer mode** (top-right) **on**.
-3. Click **Load unpacked** → select this folder:
-   `C:\Users\aliaw\Downloads\scholar-endnote-extension`
-4. Run a search at `https://scholar.google.com/scholar?q=...` (the bare homepage
-   is not matched — search first).
-5. Confirm it works: a blue bar appears **bottom-right**
-   (`cart: 0 · format · target · Export cart · Clear`), and each result row gets
-   a checkbox + `↓EN` + `★` (+ `↓MD` on `[PDF]` results).
-
-After editing any extension file: click the extension's **reload ⟳** on
-`chrome://extensions`, then **refresh** the Scholar tab.
-
-## Native host (optional) — EndNote auto-import + ↓MD
-Enables the **EndNote (auto-import)** target and the `↓MD` PDF→Markdown button.
-Without it, the **Download file** target still works and EndNote falls back to a
-`.ris` download.
-
-```powershell
+## Windows: Yes, it installs on your Windows (yes)
+- No ready-made download / no build step. It installs as an unpacked Chrome extension.
+Install (core, required): load this folder via `chrome://extensions` → Developer mode → Load unpacked.
+Install (native host, optional — EndNote auto-import + ↓MD): `python nativehost\install.py`
+Install (PDF→Markdown dep, optional): `pip install markitdown`
+Steps from source:
+1. Check it supports your device (Chrome/Chromium with `chrome://extensions`; Python only for the host).
+2. Clone the repository (Needs Git: winget install Git.Git)
+```
+git clone https://github.com/AliAwaisKhalid/scholar-to-endnote.git
+cd scholar-to-endnote
+```
+3. Load the extension (no runtime to install)
+```
+# chrome://extensions  ->  Developer mode ON  ->  Load unpacked  ->  pick this folder
+```
+4. (Optional) Install the native host for EndNote auto-import and PDF->Markdown
+```
 python nativehost\install.py
 pip install markitdown
 ```
-
-`install.py` auto-detects the extension ID from Chrome. If detection fails, pass
-it explicitly (copy the ID from `chrome://extensions`):
-
-```powershell
-python nativehost\install.py <EXTENSION_ID>
+(auto-detects the extension ID; pass it explicitly if detection fails:
+`python nativehost\install.py <EXTENSION_ID>`). Restart Chrome.
+5. Run it
 ```
-
-Then **restart Chrome**. For EndNote auto-import, `.ris` must be file-associated
-with EndNote (the host writes a temp `.ris` and opens it).
-
-## How it fits together
+# Open  https://scholar.google.com/scholar?q=...  (search first; the bare homepage is not matched)
+# Blue bar appears bottom-right; each result row gets checkbox + down-EN + star (+ down-MD on [PDF]).
+```
+6. After editing files: reload the extension on chrome://extensions, then refresh the Scholar tab.
+How it fits together:
 ```mermaid
 flowchart LR
-  scholar["Google Scholar page"] --> pick["Tick results / ↓EN"]
-  pick --> enrich["Enrich<br/>Crossref → OpenAlex"]
-  enrich --> fmt["Format<br/>RIS / ENW / BibTeX / RefWorks"]
-  fmt --> file["Download file"]
-  fmt --> zotero["Zotero (running)"]
-  fmt --> endnote["EndNote (native host)"]
+  subgraph get["Get it"]
+    unpacked["Load unpacked<br/>chrome://extensions"]
+    host["Native host (optional)<br/>install.py + markitdown"]
+  end
+  subgraph run["Use it"]
+    pick["Tick results / down-EN"]
+    enrich["Enrich<br/>Crossref -> OpenAlex"]
+    out["Export<br/>file / Zotero / EndNote"]
+  end
+  unpacked --> pick --> enrich --> out
+  host --> out
   classDef best fill:#1a73e8,stroke:#15161a,color:#fff
-  class file best
+  class unpacked best
 ```
 
-Full reference, journal-quality badges, bundled rankings, and known limits:
-see [README.md](README.md).
+Generated locally by Claude from the repo's own files (not analyzed by gitmanual — this is a private repo). Read commands before running them.
