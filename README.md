@@ -73,5 +73,8 @@ fails: `python nativehost\install.py <EXTENSION_ID>`). Restart Chrome.
 - No icons yet — add 16/48/128 px + `icons` in `manifest.json` before any store
   submission. Fine for unpacked/dev use.
 
+## License
+MIT — see [LICENSE](LICENSE).
+
 ## Author
 - Threads: https://www.threads.com/@aliawaischeema
