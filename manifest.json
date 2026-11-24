@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Scholar → EndNote Export",
+  "version": "0.3.0",
+  "description": "Select Google Scholar results (search, profile, cited-by, library), enrich via Crossref/OpenAlex, show journal-quality badges, export to EndNote/Zotero (RIS/ENW/BibTeX/RefWorks), and convert PDFs to Markdown.",
+  "permissions": ["downloads", "storage", "nativeMessaging"],
+  "host_permissions": [
+    "https://scholar.google.com/*",
+    "https://scholar.googleusercontent.com/*",
+    "https://api.crossref.org/*",
+    "https://api.openalex.org/*",
+    "http://127.0.0.1:23119/*"
+  ],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://scholar.google.com/scholar*",
+        "https://scholar.google.com/citations*"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["rankings/*"],
+      "matches": ["https://scholar.google.com/*"]
+    }
+  ]
+}

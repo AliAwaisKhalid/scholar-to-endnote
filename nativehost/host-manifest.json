@@ -1,0 +1,9 @@
+{
+  "name": "com.endnote_import.host",
+  "description": "Scholar to EndNote import host",
+  "path": "C:\\Users\\aliaw\\Downloads\\scholar-endnote-extension\\nativehost\\endnote_host.bat",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://bhdljacdokemaijcaplaaphnklebalba/"
+  ]
+}
